@@ -26,4 +26,4 @@ def calculate_mean_and_fill(df):
 
 
 def output_data_cleansing_result(df):
-    df.to_csv("output/part1_data_cleansing_data.csv", index=False)
+    df.to_csv("output/part1_data_cleansing_data.csv")

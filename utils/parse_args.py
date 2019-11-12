@@ -17,6 +17,9 @@ def parse_args():
     parser.add_argument('-p4', '--part_4', action='store_true',
                         help='Part 4 in PDF: Perform Feature Ranking using Fisher LDA on the data'
                              ' and output to output folder')
+    parser.add_argument('-p5', '--part_5', action='store_true',
+                        help='Part 5 in PDF: Perform Dimensionality Reduction using PCA on the data'
+                             ' and output to output folder')
 
     args = parser.parse_args()
 

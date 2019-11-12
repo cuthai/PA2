@@ -62,7 +62,7 @@ def rank_and_select_features(df, fisher_lda_results):
 
 
 def output_feature_ranking_result(df, fisher_lda_results):
-    df.to_csv("output/part4_feature_ranking_data.csv", index=False)
+    df.to_csv("output/part4_feature_ranking_data.csv")
 
     with open("output/part4_feature_ranking_algorithm.json", 'w') as file:
         json.dump(fisher_lda_results, file)

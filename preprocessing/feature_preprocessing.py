@@ -29,16 +29,18 @@ def normalize_z_score(df):
 
 def construct_confidence_interval_and_find_outliers(df, t_value):
     outlier_set = set()
-    confidence_interval = None
+    confidence_interval = {}
 
-    for column in df.keys()[:-5]:
+    for column in df[["sepal length", "sepal width", "petal length", "petal width"]].keys():
         mean = df[column].mean()
         slower = df.loc[df[column] < mean][column].mean()
         supper = df.loc[df[column] > mean][column].mean()
 
         lower_bound = slower - (t_value * (mean - slower))
         upper_bound = supper + (t_value * (supper - mean))
-        confidence_interval = {'lower_bound': lower_bound, 'upper_bound': upper_bound}
+
+        temp_dict = {column: {'lower_bound': lower_bound, 'upper_bound': upper_bound}}
+        confidence_interval.update(temp_dict)
 
         for index in range(150):
             if df.at[index, column] < lower_bound:
@@ -57,8 +59,8 @@ def remove_outliers(df, outlier_set):
 
 
 def output_feature_preprocessing_result(df, outlier_df, confidence_interval):
-    df.to_csv("output/part3_feature_preprocessing_data.csv", index=False)
-    outlier_df.to_csv("output/part3_feature_preprocessing_outlier_data.csv", index=False)
+    df.to_csv("output/part3_feature_preprocessing_data.csv")
+    outlier_df.to_csv("output/part3_feature_preprocessing_outlier_data.csv")
 
     with open("output/part3_feature_preprocessing_outlier_algorithm.json", 'w') as file:
         json.dump(confidence_interval, file)

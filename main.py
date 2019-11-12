@@ -3,6 +3,7 @@ from preprocessing.load_data import load_data
 from preprocessing.data_cleansing import data_cleansing_class_mean
 from preprocessing.feature_generation import feature_generation_pca
 from preprocessing.feature_preprocessing import feature_preprocessing_confidence_interval
+from preprocessing.feature_ranking import feature_ranking_fisher_lda
 
 
 def main():
@@ -17,7 +18,10 @@ def main():
         df = feature_generation_pca(df, 2)
 
     if args.part_3:
-        feature_preprocessing_confidence_interval(df)
+        df = feature_preprocessing_confidence_interval(df)
+
+    if args.part_4:
+        df = feature_ranking_fisher_lda(df)
 
 
 if __name__ == '__main__':

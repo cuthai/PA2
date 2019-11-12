@@ -14,6 +14,9 @@ def parse_args():
     parser.add_argument('-p3', '--part_3', action='store_true',
                         help='Part 3 in PDF: Perform Feature Preprocessing using Confidence Interval method on the data'
                              ' and output to output folder')
+    parser.add_argument('-p4', '--part_4', action='store_true',
+                        help='Part 4 in PDF: Perform Feature Ranking using Fisher LDA on the data'
+                             ' and output to output folder')
 
     args = parser.parse_args()
 

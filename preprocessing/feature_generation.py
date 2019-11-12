@@ -42,4 +42,4 @@ def add_to_dataframe(df, generated_features):
 
 
 def output_feature_generation_result(df):
-    df.to_csv("output/part2_feature_generation_result.csv", index=False)
+    df.to_csv("output/part2_feature_generation_data.csv", index=False)

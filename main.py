@@ -26,10 +26,10 @@ def main():
         feature_ranking_fisher_lda(df)
 
     if args.part_5:
-        df = dimensionality_reduction_pca(df, 2)
+        pca_df = dimensionality_reduction_pca(df, 2)
 
     if args.part_6a:
-        expectation_maximization(df)
+        expectation_maximization(df, pca_df)
 
 
 if __name__ == '__main__':

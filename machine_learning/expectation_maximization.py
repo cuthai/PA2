@@ -1,34 +1,36 @@
 import random
 import math
 import numpy as np
+from scipy.stats import multivariate_normal
 
 
-def expectation_maximization(df):
-    em_df = df.copy(deep=True)
+def expectation_maximization(df, pca_df):
+    em_df = pca_df.copy(deep=True)
+    df = df.copy(deep=True)
 
     choose_random_starting_clusters(em_df)
 
-    data_array, mean, covariance, probabilities = calculate_initial_parameters(em_df)
+    data_array, mean, covariance = calculate_initial_parameters(em_df)
 
-    mixture = calculate_e_step(data_array, mean, covariance, probabilities)
+    mixture = calculate_e_step(data_array, mean, covariance)
 
-    for i in range(100):
+    for index in range(1000):
         new_mean, new_covariance, new_probabilities = calculate_m_step(data_array, mixture)
 
         test = 0
-        for index in range(3):
-            test += abs(new_mean[index].sum() - mean[index].sum())
+        for class_index in range(3):
+            test += abs(new_mean[class_index].sum() - mean[class_index].sum())
 
         if test <= .00000001:
             break
         else:
             mean = new_mean
             covariance = new_covariance
-            probabilities = new_probabilities
-            mixture = calculate_e_step(data_array, mean, covariance, probabilities)
-            print(covariance)
+            mixture = calculate_e_step(data_array, mean, covariance)
 
-    pass
+    em_result_df = classify(df, em_df, mixture)
+
+    output_expectation_maximization_result(em_result_df)
 
 
 def choose_random_starting_clusters(df):
@@ -50,44 +52,30 @@ def choose_random_starting_clusters(df):
 
 
 def calculate_initial_parameters(df):
-    data_array = df[[["PCA 1", "PCA 2"]]].values
+    data_array = df[["PCA 1", "PCA 2"]].values
     mean = []
     covariance = []
-    probabilities = []
 
     for index in range(1, 4):
         temp_df = df.loc[df['cluster'] == index][["PCA 1", "PCA 2"]]
         mean.append(temp_df.mean().values)
         covariance.append(np.cov(temp_df.values.T))
-        probabilities.append(len(temp_df) / len(df))
 
-    return data_array, mean, covariance, probabilities
+    return data_array, mean, covariance
 
 
-def calculate_e_step(data_array, mean, covariance, probabilities):
+def calculate_e_step(data_array, mean, covariance):
     gaussian = []
 
     for index in range(3):
-        mean_array = mean[index]
-        covariance_array = covariance[index]
-        probability = probabilities[index]
-
-        normalizer_step1 = ((2 * math.pi) ** 2)
-        normalizer_step2 = np.linalg.det(covariance_array)
-        normalizer = 1 / math.sqrt(normalizer_step1 * normalizer_step2)
-
-        exponent_step1 = data_array - mean_array
-        exponent_step2 = -.5 * exponent_step1
-        exponent_step3 = exponent_step2.dot(np.linalg.inv(covariance_array))
-        exponent_step4 = exponent_step3 * exponent_step1
-        exponent = np.exp(exponent_step4)
-
-        gaussian.append(probability * (np.exp(exponent) * normalizer))
+        gaussian_model = multivariate_normal(mean=mean[index], cov=covariance[index])
+        gaussian.append(gaussian_model.pdf(data_array))
 
     mixture = []
     denominator = gaussian[0] + gaussian[1] + gaussian[2]
     for index in range(3):
-        mixture.append(gaussian[index] / denominator)
+        mixture_array = (gaussian[index] / denominator)
+        mixture.append(mixture_array.reshape(len(data_array), 1))
 
     return mixture
 
@@ -114,3 +102,24 @@ def calculate_m_step(data_array, mixture):
         probabilities.append(mixture_sum / len(data_array))
 
     return mean, covariance, probabilities
+
+
+def classify(df, em_df, mixture):
+    classification = []
+    df = df.merge(em_df[["PCA 1", "PCA 2"]], left_index=True, right_index=True)
+
+    for index in range(len(df)):
+        if mixture[0][index] > mixture[1][index] and mixture[0][index] > mixture[2][index]:
+            classification.append(1)
+        elif mixture[1][index] > mixture[0][index] and mixture[1][index] > mixture[2][index]:
+            classification.append(2)
+        elif mixture[2][index] > mixture[0][index] and mixture[2][index] > mixture[1][index]:
+            classification.append(3)
+
+    df['em_class'] = classification
+
+    return df
+
+
+def output_expectation_maximization_result(df):
+    df.to_csv("output/part6a_expectation_maximization_data.csv")

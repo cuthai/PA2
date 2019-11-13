@@ -5,6 +5,7 @@ from preprocessing.feature_generation import feature_generation_pca
 from preprocessing.feature_preprocessing import feature_preprocessing_confidence_interval
 from preprocessing.feature_ranking import feature_ranking_fisher_lda
 from preprocessing.dimensionality_reduction import dimensionality_reduction_pca
+from machine_learning.expectation_maximization import expectation_maximization
 
 
 def main():
@@ -26,6 +27,9 @@ def main():
 
     if args.part_5:
         df = dimensionality_reduction_pca(df, 2)
+
+    if args.part_6a:
+        expectation_maximization(df)
 
 
 if __name__ == '__main__':

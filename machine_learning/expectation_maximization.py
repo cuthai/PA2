@@ -14,19 +14,7 @@ def expectation_maximization(df, pca_df):
 
     mixture = calculate_e_step(data_array, mean, covariance)
 
-    for index in range(1000):
-        new_mean, new_covariance, new_probabilities = calculate_m_step(data_array, mixture)
-
-        test = 0
-        for class_index in range(3):
-            test += abs(new_mean[class_index].sum() - mean[class_index].sum())
-
-        if test <= .00000001:
-            break
-        else:
-            mean = new_mean
-            covariance = new_covariance
-            mixture = calculate_e_step(data_array, mean, covariance)
+    mixture = iterate_expectation_maximization(data_array, mixture, mean)
 
     em_result_df = classify(df, em_df, mixture)
 
@@ -102,6 +90,24 @@ def calculate_m_step(data_array, mixture):
         probabilities.append(mixture_sum / len(data_array))
 
     return mean, covariance, probabilities
+
+
+def iterate_expectation_maximization(data_array, mixture, mean):
+    for index in range(1000):
+        new_mean, new_covariance, new_probabilities = calculate_m_step(data_array, mixture)
+
+        test = 0
+        for class_index in range(3):
+            test += abs(new_mean[class_index].sum() - mean[class_index].sum())
+
+        if test <= .00000001:
+            break
+        else:
+            mean = new_mean
+            covariance = new_covariance
+            mixture = calculate_e_step(data_array, mean, covariance)
+
+    return mixture
 
 
 def classify(df, em_df, mixture):

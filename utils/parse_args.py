@@ -23,6 +23,9 @@ def parse_args():
     parser.add_argument('-p6a', '--part_6a', action='store_true',
                         help='Part 6a in PDF: Perform Expectation Maximization on the data'
                              ' and output to output folder')
+    parser.add_argument('-p6b', '--part_6b', action='store_true',
+                        help='Part 6b in PDF: Perform Fisher Linear Discriminant on the data'
+                             ' and output to output folder')
 
     args = parser.parse_args()
 

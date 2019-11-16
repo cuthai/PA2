@@ -7,6 +7,7 @@ from preprocessing.feature_ranking import feature_ranking_fisher_lda
 from preprocessing.dimensionality_reduction import dimensionality_reduction_pca
 from machine_learning.expectation_maximization import expectation_maximization
 from machine_learning.fisher_linear_discriminant import fisher_linear_discriminant
+from machine_learning.feed_forward_neural_network import feed_forward_neural_network
 
 
 def main():
@@ -35,7 +36,11 @@ def main():
         if args.part_6b:
             fisher_linear_discriminant(df)
 
-        pass
+        if args.part_6c:
+            feed_forward_neural_network(df)
+
+        if args.part_6d:
+
 
 
 if __name__ == '__main__':

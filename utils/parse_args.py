@@ -29,6 +29,9 @@ def parse_args():
     parser.add_argument('-p6c', '--part_6c', action='store_true',
                         help='Part 6c in PDF: Perform Feed Forward Neural Network Classification on the data'
                              ' and output to output folder')
+    parser.add_argument('-p6d', '--part_6d', action='store_true',
+                        help='Part 6d in PDF: Perform Support Vector Machine Classification on the data'
+                             ' and output to output folder')
 
     args = parser.parse_args()
 

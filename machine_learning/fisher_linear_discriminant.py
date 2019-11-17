@@ -9,9 +9,9 @@ def fisher_linear_discriminant(df):
     sw = calculate_within_class_scatter_matrix(data_array_split)
     sb = calculate_between_class_scatter_matrix(data_array, data_array_split)
     w = calculate_coefficient_w(sw, sb)
-    y = data_array.dot(w)
+    results = data_array.dot(w)
 
-    df = classify(df, y)
+    df = classify(df, results)
 
     output_fisher_linear_discriminant_result(df)
 

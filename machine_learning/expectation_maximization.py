@@ -12,9 +12,9 @@ def expectation_maximization(df, pca_df):
 
     data_array, mean, covariance = calculate_initial_parameters(em_df)
 
-    mixture = iterate_expectation_maximization(data_array, mean, covariance)
+    results = iterate_expectation_maximization(data_array, mean, covariance)
 
-    em_result_df = classify(df, em_df, mixture)
+    em_result_df = classify(df, em_df, results)
 
     output_expectation_maximization_result(em_result_df)
 

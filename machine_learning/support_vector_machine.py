@@ -18,9 +18,9 @@ def create_model_and_classify(df, pca_df):
     model = svm.LinearSVC(multi_class='ovr')
     model.fit(x, y)
 
-    classification = model.predict(x)
+    results = model.predict(x)
 
-    return classification.T
+    return results.T
 
 
 def classify(df, results):

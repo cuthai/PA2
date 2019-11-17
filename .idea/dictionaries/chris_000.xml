@@ -6,6 +6,7 @@
       <w>eigen</w>
       <w>flda</w>
       <w>preprocessing</w>
+      <w>scipy</w>
     </words>
   </dictionary>
 </component>

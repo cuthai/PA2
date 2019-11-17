@@ -4,9 +4,13 @@
       <w>backprop</w>
       <w>dataframe</w>
       <w>eigen</w>
+      <w>ffnn</w>
       <w>flda</w>
+      <w>keras</w>
       <w>preprocessing</w>
       <w>scipy</w>
+      <w>sklearn</w>
+      <w>softmax</w>
     </words>
   </dictionary>
 </component>

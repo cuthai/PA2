@@ -2,6 +2,11 @@ import argparse
 
 
 def parse_args():
+    """
+    Method for parsing creating command line options and parsing them
+
+    :return args: command line namespace
+    """
     parser = argparse.ArgumentParser()
     parser.add_argument('-lf', '--load_file', type=str, default='updated_iris.csv',
                         help='Specify file to load from input file')

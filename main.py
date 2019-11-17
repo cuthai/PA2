@@ -12,8 +12,27 @@ from machine_learning.support_vector_machine import support_vector_machine
 
 
 def main():
+    """
+    Main method for running PA2, triggers code depending on specified parameters
+        See ReadMe for full descriptions on the command line arguments to pass to the code
+        -p6[a-d] requires -p5 to be passed to the command line as well
+
+    All command line arguments:
+        -lf <file_name>
+        -p1
+        -p2
+        -p3
+        -p4
+        -p5 requirement for the below:
+            -p6a
+            -p6b
+            -p6c
+            -p6d
+    """
+    # Parse command line arguments
     args = parse_args.parse_args()
 
+    # Load data
     df = load_data(args.load_file)
 
     if args.part_1:

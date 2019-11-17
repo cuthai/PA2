@@ -24,6 +24,8 @@ def create_model_and_classify(df, pca_df):
 
 
 def classify(df, results):
+    results = results + 1
+
     df['svm_class'] = results
     return df
 

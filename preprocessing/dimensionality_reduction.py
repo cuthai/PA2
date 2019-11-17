@@ -11,7 +11,7 @@ def dimensionality_reduction_pca(df, features_to_generate):
     generated_df.columns = ['PCA 1', 'PCA 2']
     generated_df.index = df.index
 
-    output_dimensionality_reduction_result(df, eigen_result)
+    output_dimensionality_reduction_result(generated_df, eigen_result)
 
     return generated_df
 

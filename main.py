@@ -36,7 +36,7 @@ def main():
     df = load_data(args.load_file)
 
     if args.part_1:
-        data_cleansing_class_mean(df)
+        df = data_cleansing_class_mean(df)
 
     if args.part_2:
         feature_generation_pca(df, 2)
